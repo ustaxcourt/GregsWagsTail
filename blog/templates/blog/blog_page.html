@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+    <h1>{{ page.title }}</h1>
+    <p class="meta">{{ page.date }}</p>
+
+    <div class="intro">{{ page.intro }}</div>
+
+    {{ page.body|richtext }}
+
+    {% if page.authors.all.count %}
+        <h3>Authors</h3>
+        {% for author in page.authors.all %}
+            <div>
+                {% if author.author_image %}
+                    {% image author.author_image fill-50x50 %}
+                {% endif %}
+                <p>{{ author.name }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if page.gallery_images.all %}
+        <h3>Gallery</h3>
+        {% for item in page.gallery_images.all %}
+            <div style="float: left; margin: 10px;">
+                {% image item.image fill-320x240 %}
+                <p>{{ item.caption }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if page.tags.all.count %}
+        <div class="tags">
+            <h3>Tags</h3>
+            {% for tag in page.tags.all %}
+                <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button">{{ tag }}</button></a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+
+{% endblock %}
