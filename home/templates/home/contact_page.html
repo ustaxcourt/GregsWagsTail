@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-contact{% endblock %}
+
+{% block content %}
+    <h1>{{ page.title }}</h1>
+    
+    <div class="intro">
+        {{ page.intro|richtext }}
+    </div>
+
+    <div class="contact-info">
+        {% if page.email %}
+            <p><strong>Email:</strong> <a href="mailto:{{ page.email }}">{{ page.email }}</a></p>
+        {% endif %}
+        
+        {% if page.phone %}
+            <p><strong>Phone:</strong> {{ page.phone }}</p>
+        {% endif %}
+        
+        {% if page.address %}
+            <p><strong>Address:</strong></p>
+            <div>{{ page.address|richtext }}</div>
+        {% endif %}
+    </div>
+{% endblock %}

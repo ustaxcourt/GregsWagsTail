@@ -31,7 +31,23 @@
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
-        {% block content %}{% endblock %}
+        <header>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/blog/">Blog</a>
+                <a href="/search/">Search</a>
+            </nav>
+        </header>
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer>
+            {% load home_tags %}
+            {% get_footer_text as footer_text %}
+            {{ footer_text.body|richtext }}
+        </footer>
 
         <script type="text/javascript" src="{% static 'js/mysite.js' %}"></script>
 
